@@ -122,12 +122,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 const openWindow = () => {
-  chrome.tabs.query({ currentWindow: true }, (tabs) => {
-    for (t of tabs) {
-      console.log(t);
-      if (t.url.includes("popup.html")) return;
-    }
-  });
   chrome.windows.getCurrent((tabWindow) => {
     const width = 760;
     const height = 478;

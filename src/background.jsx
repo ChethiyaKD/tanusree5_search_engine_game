@@ -1,5 +1,18 @@
+const APIURL =
+  "https://script.google.com/macros/s/AKfycbz8qb66O054xBFVwa8c-u0vYkcu4uqJdHTRf988T3H_FUbGbBGxZ6LMpOcAy0XndzL5gA/exec";
+
 const googleSearch = (searchTerm) => {
   chrome.tabs.create({ url: `https://google.com/search?q=${searchTerm}` });
+};
+
+const getBrowsingWeek = () => {
+  fetch(`${APIURL}?type=keywords`)
+    .then((result) => result.json())
+    .then((data) => {
+      console.log(data);
+      saveToStorage({ browsingWeek: data.data });
+    })
+    .catch((err) => console.log(err));
 };
 
 const saveToStorage = (obj) =>
@@ -45,3 +58,11 @@ const openWindow = () => {
     });
   });
 };
+
+///////
+
+const init = () => {
+  getBrowsingWeek();
+};
+
+init();

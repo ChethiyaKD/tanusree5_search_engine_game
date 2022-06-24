@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Poppins Semibold";
+  src: url("../assets/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .primary-button {
+    width: 153px;
+    height: 40px;
+    background: #1b45f6;
+    border-radius: 39px;
+
+    border: none;
+    outline: none;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Poppins Semibold";
+
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #4361d2;
+    }
+  }
+}

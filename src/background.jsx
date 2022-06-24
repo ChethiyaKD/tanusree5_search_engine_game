@@ -16,8 +16,8 @@ const openWindow = () => {
       focused: true,
       url: chrome.runtime.getURL("popup.html"),
       type: "popup",
-      width,
-      height,
+      width: 760,
+      height: 478,
       left,
       top,
     });

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "Poppins Regular";
+  src: url("../assets/fonts/Poppins/Poppins-Regular.ttf");
+}
+
+.input-wrapper {
+  width: 100%;
+
+  input {
+    background: #ffffff;
+    border: 1px solid #e4eafb;
+    border-radius: 6px;
+    outline: none;
+    font-family: "Poppins Regular";
+
+    font-size: 12px;
+    line-height: 18px;
+    padding: 6px;
+
+    color: #000000;
+    width: 100%;
+  }
+}

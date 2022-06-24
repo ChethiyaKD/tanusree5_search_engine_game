@@ -1,8 +1,16 @@
 const APIURL =
-  "https://script.google.com/macros/s/AKfycbz8qb66O054xBFVwa8c-u0vYkcu4uqJdHTRf988T3H_FUbGbBGxZ6LMpOcAy0XndzL5gA/exec";
+  "https://script.google.com/macros/s/AKfycbzMlzSCOnyjZDgrqxLeGTv5p9PyjwA1S6jQ-VWlkFWpv-kMF_WPdIBi3V_OmjxJ2NNrLw/exec";
 
-const googleSearch = (searchTerm) => {
+const googleSearch = async (searchTerm) => {
   chrome.tabs.create({ url: `https://google.com/search?q=${searchTerm}` });
+  let storageRes = await getFromStorage("history");
+  if (!storageRes.history) return;
+
+  storageRes.history.push({
+    searchTerm: searchTerm,
+    date: new Date().toUTCString(),
+  });
+  saveToStorage({ history: storageRes.history });
 };
 
 const getBrowsingWeek = () => {
@@ -13,6 +21,57 @@ const getBrowsingWeek = () => {
       saveToStorage({ browsingWeek: data.data });
     })
     .catch((err) => console.log(err));
+};
+
+const getHistory = () =>
+  new Promise(async (resolve) => {
+    let storageRes = await getFromStorage("history");
+    if (storageRes.history) resolve(storageRes.history);
+  });
+
+const postData = (data) => {
+  return new Promise((resolve) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: data,
+      redirect: "follow",
+    };
+
+    fetch(APIURL, requestOptions)
+      .then((response) => response.json())
+      .then((result) => resolve(result))
+      .catch((error) => console.log("error", error));
+  });
+};
+
+const createUser = (uuid) => {
+  const raw = JSON.stringify({
+    id: uuid,
+    credits: 0,
+    type: "updateUser",
+  });
+
+  postData(raw);
+};
+
+const uploadHistory = () => {
+  return new Promise(async (resolve) => {
+    let storageRes = await getFromStorage(["id", "history"]);
+    if (storageRes.id && storageRes.history) {
+      const raw = JSON.stringify({
+        id: storageRes.id,
+        history: JSON.stringify(storageRes.history),
+        type: "uploadHistory",
+      });
+
+      let done = await postData(raw);
+      resolve(done);
+    }
+  });
 };
 
 const saveToStorage = (obj) =>
@@ -26,7 +85,13 @@ const getFromStorage = (arr) =>
   });
 
 chrome.runtime.onInstalled.addListener(() => {
-  const defSettings = { firstTime: true, userId: null, credits: 0, balance: 0 };
+  const defSettings = {
+    firstTime: true,
+    userId: null,
+    credits: 0,
+    balance: 0,
+    history: [],
+  };
   saveToStorage(defSettings);
 });
 
@@ -38,9 +103,31 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.command === "search") {
     googleSearch(msg.data);
   }
+  if (msg.command === "getHistory") {
+    (async () => {
+      let history = await getHistory();
+      sendResponse(history);
+    })();
+  }
+  if (msg.command === "createUser") {
+    createUser(msg.data);
+  }
+  if (msg.command === "uploadHistory") {
+    (async () => {
+      let res = await uploadHistory();
+      sendResponse(res);
+    })();
+  }
+  return true;
 });
 
 const openWindow = () => {
+  chrome.tabs.query({ currentWindow: true }, (tabs) => {
+    for (t of tabs) {
+      console.log(t);
+      if (t.url.includes("popup.html")) return;
+    }
+  });
   chrome.windows.getCurrent((tabWindow) => {
     const width = 760;
     const height = 478;

@@ -1,0 +1,11 @@
+.delete-button-wrapper {
+  .delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

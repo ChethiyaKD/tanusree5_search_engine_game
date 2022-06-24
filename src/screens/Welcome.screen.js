@@ -1,14 +1,17 @@
 import React from "react";
+import uuid from 'react-uuid'
 import "../styles/fonts.scss";
 import "../styles/screens/welcome.scss";
 
 import Button from "../components/Button.js";
-import { saveToStorage } from "../actions/actions";
+import { saveToStorage, sendMessage } from "../actions/actions";
 
 export default function Welcome({ setFirstTime }) {
   const handleButton = () => {
+    let id = uuid()
     setFirstTime(false);
-    saveToStorage({ firstTime: false });
+    saveToStorage({ firstTime: false, id: id });
+    sendMessage({ command: "createUser", data: id })
   };
 
   const buttonProps = {

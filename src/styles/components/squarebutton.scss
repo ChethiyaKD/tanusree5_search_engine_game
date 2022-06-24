@@ -1,17 +1,17 @@
 @font-face {
-  font-family: "Poppins Semibold";
-  src: url("../assets/fonts/Poppins/Poppins-SemiBold.ttf");
+  font-family: "Poppins Medium";
+  src: url("../assets/fonts/Poppins/Poppins-Medium.ttf");
 }
-.button-container {
+.square-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
 
   .primary-button {
-    width: 153px;
-    height: 40px;
-    background: #1b45f6;
-    border-radius: 39px;
+    width: 80px;
+    height: 33px;
+    background: #2169f5;
+    border-radius: 6px;
 
     border: none;
     outline: none;
@@ -20,7 +20,7 @@
     justify-content: center;
     align-items: center;
 
-    font-family: "Poppins Semibold";
+    font-family: "Poppins Medium";
 
     transition: 0.3s ease-in-out;
     cursor: pointer;

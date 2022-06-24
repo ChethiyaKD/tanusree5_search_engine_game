@@ -14,5 +14,5 @@
     "64": "./assets/icons/64.png",
     "128": "./assets/icons/128.png"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage", "tabs"]
 }

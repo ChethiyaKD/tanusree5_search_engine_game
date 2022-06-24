@@ -3,15 +3,17 @@ import "../styles/fonts.scss";
 import "../styles/screens/welcome.scss";
 
 import Button from "../components/Button.js";
+import { saveToStorage } from "../actions/actions";
 
-export default function Welcome() {
+export default function Welcome({ setFirstTime }) {
   const handleButton = () => {
-    console.log("clicked");
+    setFirstTime(false);
+    saveToStorage({ firstTime: false });
   };
 
   const buttonProps = {
     text: "Yes",
-    onclick: handleButton,
+    onClick: handleButton,
   };
 
   return (

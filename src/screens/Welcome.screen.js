@@ -11,7 +11,6 @@ export default function Welcome({ setFirstTime }) {
     let id = uuid()
     setFirstTime(false);
     saveToStorage({ firstTime: false, id: id });
-    sendMessage({ command: "createUser", data: id })
   };
 
   const buttonProps = {

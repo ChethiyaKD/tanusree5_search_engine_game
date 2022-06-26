@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
-import { saveToStorage } from "./actions/actions.js";
-import { getFromStorage } from "./actions/actions.js";
+import {
+  saveToStorage,
+  getFromStorage,
+  listenToLogin,
+} from "./actions/actions.js";
 
 import "./styles/main.scss";
 
 import Welcome from "./screens/Welcome.screen.js";
 import Dashboard from "./screens/Dashboard.screen.js";
+import Login from "./screens/Login.screen";
 
 function Popup() {
   const [firstTime, setFirstTime] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(async () => {
-    let storageRes = await getFromStorage("firstTime");
+    let storageRes = await getFromStorage(["firstTime", "userId"]);
+    if (storageRes.userId) setLoggedIn(true);
     setFirstTime(storageRes.firstTime);
   }, []);
 
+  listenToLogin(setLoggedIn);
+
   return (
     <div className="container">
-      {firstTime && <Welcome setFirstTime={setFirstTime} />}
-      {!firstTime && <Dashboard />}
+      {!loggedIn && <Login />}
+      {loggedIn && firstTime && <Welcome setFirstTime={setFirstTime} />}
+      {loggedIn && !firstTime && <Dashboard />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveToStorage, sendMessage } from "../actions/actions.js";
+import { getFromStorage, sendMessage } from "../actions/actions.js";
 import SquareButton from "../components/SquareButton.js";
 import InputType from "../components/InputType.js";
 import "../styles/views/tasks.scss";
@@ -12,8 +12,8 @@ export default function Tasks() {
     { id: 4, text: "Home Depot", link: null },
   ]);
 
-  const handleSubmitButton = (id) => {
-    console.log(id);
+  const handleSubmitButton = (t) => {
+    sendMessage({ command: "submitTask", task: t });
   };
 
   const buttonProps = {
@@ -23,14 +23,16 @@ export default function Tasks() {
   };
 
   const handleInputChange = (e, id) => {
+    console.log(id);
     let index = data.findIndex((k) => k.id === id);
     data[index].link = e.target.value;
     setData([...data]);
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(async () => {
+    let storageRes = await getFromStorage("weekTwoKeywords");
+    if (storageRes.weekTwoKeywords) setData([...storageRes.weekTwoKeywords]);
+  }, []);
 
   return (
     <div className="tasks-container">
@@ -40,12 +42,16 @@ export default function Tasks() {
             return (
               <div className="keyword-item" key={i}>
                 <span className="caption">Keyword</span>
-                <span className="keyword-name">{k.text}</span>
+                <span className="keyword-name">{k.keyword}</span>
                 <div className="input-container">
                   <InputType
                     props={{ onChange: handleInputChange, id: k.id }}
                   />
-                  <SquareButton props={buttonProps} />
+                  <SquareButton
+                    props={buttonProps}
+                    disabled={k.link ? true : false}
+                    id={k}
+                  />
                 </div>
               </div>
             );

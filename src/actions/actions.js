@@ -15,3 +15,10 @@ export function sendMessage(msg) {
     })
 }
 
+export function listenToLogin(setLoggedIn) {
+    chrome.storage.onChanged.addListener(e => {
+        if (!e.userId) return;
+        if (!e.userId.newValue) return;
+        setLoggedIn(true);
+    })
+}

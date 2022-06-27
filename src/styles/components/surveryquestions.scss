@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "Poppins Regular";
+  src: url("../..//assets/fonts/Poppins/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Poppins Semibold";
+  src: url("../../assets/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+
+.survery-question-popup-wrapper {
+  position: absolute;
+  width: 429px;
+  min-height: 226px;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0px 4px 36px rgba(53, 54, 54, 0.09);
+  border-radius: 8px;
+
+  padding: 17px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  flex-direction: column;
+
+  .popup-title {
+    font-family: "Poppins Semibold";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    /* identical to box height */
+
+    color: #000000;
+  }
+
+  .question {
+    font-family: "Poppins Regular";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+
+    color: #000000;
+
+    margin-top: 17px;
+  }
+
+  .input-container {
+    margin-top: 16px;
+    width: 300px;
+  }
+  .button-wrapper {
+    margin-top: 37px;
+  }
+}

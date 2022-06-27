@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFromStorage } from "../actions/actions.js";
+import SurveyQuestion from "../components/SurveyQuestion.js";
 import "../styles/views/browsingweek.scss";
 
 export default function BrowsingWeek() {
@@ -12,6 +13,7 @@ export default function BrowsingWeek() {
 
   return (
     <div className="browsing-week-container">
+      <SurveyQuestion />
       <span className="title">
         Search the topic listed below from the search
       </span>
@@ -23,9 +25,8 @@ export default function BrowsingWeek() {
                 <span className="item-title">{d.keyword}</span>
                 {d.questions.map((q, i) => {
                   return (
-                    <div className="item-question" key={i}>{`${
-                      i + 1
-                    }. ${q}`}</div>
+                    <div className="item-question" key={i}>{`${i + 1
+                      }. ${q}`}</div>
                   );
                 })}
               </div>

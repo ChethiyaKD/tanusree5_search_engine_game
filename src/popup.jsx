@@ -4,6 +4,7 @@ import {
   saveToStorage,
   getFromStorage,
   listenToLogin,
+  sendMessage,
 } from "./actions/actions.js";
 
 import "./styles/main.scss";
@@ -20,6 +21,7 @@ function Popup() {
     let storageRes = await getFromStorage(["firstTime", "userId"]);
     if (storageRes.userId) setLoggedIn(true);
     setFirstTime(storageRes.firstTime);
+    sendMessage({ command: "init" });
   }, []);
 
   listenToLogin(setLoggedIn);

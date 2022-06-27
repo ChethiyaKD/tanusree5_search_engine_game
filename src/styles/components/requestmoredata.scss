@@ -8,10 +8,10 @@
   src: url("../../assets/fonts/Poppins/Poppins-SemiBold.ttf");
 }
 
-.survery-question-popup-wrapper {
+.request-data-popup-wrapper {
   position: absolute;
-  width: 429px;
-  min-height: 226px;
+  width: 313px;
+  min-height: 188px;
   left: 50%;
   top: 50%;
 
@@ -40,32 +40,18 @@
 
     color: #000000;
   }
-  .qa {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
 
-    .question {
-      font-family: "Poppins Regular";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
-      text-align: center;
+  .error-message {
+    font-family: "Poppins Regular";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
 
-      color: #000000;
+    color: #000000;
 
-      margin-top: 17px;
-    }
-
-    .input-container {
-      margin-top: 16px;
-      width: 300px;
-    }
-  }
-  .button-wrapper {
-    margin-top: 37px;
+    margin-top: 17px;
+    margin-bottom: 40px;
   }
 }

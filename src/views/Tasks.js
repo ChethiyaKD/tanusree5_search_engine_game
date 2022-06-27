@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFromStorage, sendMessage } from "../actions/actions.js";
+import SurveyQuestion from "../components/SurveyQuestion.js";
 import SquareButton from "../components/SquareButton.js";
 import InputType from "../components/InputType.js";
 import "../styles/views/tasks.scss";
@@ -11,6 +12,8 @@ export default function Tasks() {
     { id: 3, text: "Twitch", link: null },
     { id: 4, text: "Home Depot", link: null },
   ]);
+
+  const [serveyQuestions, setServeyQuestions] = useState(null);
 
   const handleSubmitButton = (t) => {
     sendMessage({ command: "submitTask", task: t });
@@ -30,12 +33,24 @@ export default function Tasks() {
   };
 
   useEffect(async () => {
-    let storageRes = await getFromStorage("weekTwoKeywords");
+    let storageRes = await getFromStorage([
+      "weekTwoKeywords",
+      "serveyQuestions",
+    ]);
     if (storageRes.weekTwoKeywords) setData([...storageRes.weekTwoKeywords]);
+    if (storageRes.serveyQuestions)
+      setServeyQuestions(storageRes.serveyQuestions);
   }, []);
 
   return (
     <div className="tasks-container">
+      {Array.isArray(serveyQuestions) &&
+        serveyQuestions?.find((s) => !s.answer) && (
+          <SurveyQuestion
+            questions={serveyQuestions}
+            setQuestions={setServeyQuestions}
+          />
+        )}
       <div className="scroller-wrapper">
         <div className="scroller">
           {data.map((k, i) => {

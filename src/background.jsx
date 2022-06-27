@@ -1,5 +1,5 @@
 const APIURL =
-  "https://script.google.com/macros/s/AKfycbyhhI4uuo5HrXku1yMEbu9ZoYDAmf6QHSG9KiWEgRDCOuTZmFlzw-3888blAcIKvtJaxg/exec";
+  "https://script.google.com/macros/s/AKfycbxA2ZCMiomDaXmJnP22SEwnQT4p7wpE3312oWvVhKL60ZvkHR8Lz9hvgzcxLZHao5x7ZA/exec";
 const serpAPIKEY =
   "ede9da382a0e902a00d18bb52d2ec91d1766187663d782bf7d8e0f2013016aa3";
 
@@ -89,6 +89,56 @@ const getWeek2 = () => {
       saveToStorage({ weekTwoKeywords: data.data });
     })
     .catch((err) => console.log(err));
+};
+
+const getServey = async () => {
+  let storageRes = await getFromStorage("serveyQuestions");
+  fetch(`${APIURL}?type=surveyQuesions`)
+    .then((result) => result.json())
+    .then((data) => {
+      let filtered = [];
+      if (!storageRes.serveyQuestions) {
+        saveToStorage({ serveyQuestions: data.data });
+        return;
+      }
+      for (let d of data.data) {
+        let found = storageRes.serveyQuestions.find(
+          (s) => s.question === d.question
+        );
+        if (!found) {
+          filtered.push(d);
+        }
+      }
+      if (filtered.length > 0) {
+        storageRes.serveyQuestions = [
+          ...storageRes.serveyQuestions,
+          ...filtered,
+        ];
+        saveToStorage({ serveyQuestions: storageRes.serveyQuestions });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+const answerServey = (data) => {
+  return new Promise(async (resolve) => {
+    let storageRes = await getFromStorage(["userId", "serveyQuestions"]);
+    const raw = JSON.stringify({
+      userId: storageRes.userId,
+      type: "serveyAnswers",
+      servey: data,
+    });
+
+    let res = await postData(raw);
+    for (let answered of data) {
+      let index = storageRes.serveyQuestions.indexOf(
+        storageRes.serveyQuestions.find((s) => s.question === answered.question)
+      );
+      storageRes.serveyQuestions[index].answer = answered.answer;
+    }
+    saveToStorage({ serveyQuestions: storageRes.serveyQuestions });
+    resolve(res);
+  });
 };
 
 const getHistory = () =>
@@ -216,6 +266,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.command === "submitTask") {
     submitTask(msg.task);
   }
+  if (msg.command === "answerServey") {
+    (async () => {
+      let res = answerServey(msg.data);
+      sendResponse(res);
+    })();
+  }
+  if (msg.command === "init") {
+    getServey();
+  }
   return true;
 });
 
@@ -243,6 +302,7 @@ const openWindow = () => {
 const init = () => {
   getBrowsingWeek();
   getWeek2();
+  getServey();
 };
 
 init();

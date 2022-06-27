@@ -5,6 +5,7 @@ import "../styles/views/history.scss";
 
 import DeleteButton from "../components/DeleteButton.js";
 import Button from "../components/Button.js";
+import RequestMoreData from "../components/RequestMoreData.js";
 
 import checkDot from "../assets/images/checkDot.svg";
 
@@ -12,6 +13,7 @@ export default function History() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
+  const [requireData, setRequireData] = useState(true);
 
   const handleDelete = (id) => {
     let filtered = data.filter((d) => d != id);
@@ -48,7 +50,6 @@ export default function History() {
   useEffect(async () => {
     let historyResponse = await sendMessage({ command: "getHistory" });
     if (historyResponse) setData(historyResponse);
-
   }, []);
 
   chrome.storage.local.onChanged.addListener((e) => {
@@ -59,6 +60,7 @@ export default function History() {
 
   return (
     <div className="history-container">
+      {requireData && <RequestMoreData popup={setRequireData} />}
       <span className="title">History</span>
       <div className="scroller-wrapper">
         <div className="scroller">

@@ -5,18 +5,21 @@ import {
   saveToStorage,
 } from "../actions/actions.js";
 import "../styles/components/surveryquestions.scss";
-import InputType from "./InputType.js";
 import Button from "./Button.js";
 
 export default function SurveyQuestion({ questions, setQuestions }) {
   const [qq, setQq] = useState([]);
+  const [required, setRequired] = useState(false);
 
   const handleButton = async () => {
+    let found = qq.find((q) => !q.answer);
+    if (found) return setRequired(true);
     let res = await sendMessage({ command: "answerServey", data: qq });
     if (res) setQuestions(null);
   };
 
   const handleInput = async (e, q) => {
+    setRequired(false);
     let index = qq.indexOf(qq.find((qs) => q.question === qs.question));
     qq[index].answer = e.target.value;
   };
@@ -40,11 +43,25 @@ export default function SurveyQuestion({ questions, setQuestions }) {
           <div className="qa" key={i}>
             <span className="question">{q.question}</span>
             <div className="input-container">
-              <InputType props={{ onChange: handleInput, id: q }} />
+              <select onChange={(e) => handleInput(e, q)}>
+                <option>Select an answer</option>
+                {q.options.map((o, i) => {
+                  return (
+                    <option value={o} key={i}>
+                      {o}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
           </div>
         );
       })}
+      <div className="required-message">
+        {required && (
+          <span>Make sure you have answered all of the question</span>
+        )}
+      </div>
       <div className="button-wrapper">
         <Button props={buttonProps} />
       </div>

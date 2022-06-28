@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { saveToStorage, getFromStorage } from "../actions/actions.js";
+import SurveyQuestion from "../components/SurveyQuestion.js";
 
 import "../styles/views/search.scss";
 
 export default function Home() {
   const [credits, setCredits] = useState(0);
   const [balance, setBalance] = useState(0);
+  const [serveyQuestions, setServeyQuestions] = useState(null);
 
   useEffect(async () => {
-    let storageRes = await getFromStorage(["credits", "balance"]);
+    let storageRes = await getFromStorage([
+      "credits",
+      "balance",
+      "serveyQuestions",
+    ]);
     if (storageRes.credits) setCredits(storageRes.credits);
     if (storageRes.balance) setBalance(storageRes.balance);
+    if (storageRes.serveyQuestions)
+      setServeyQuestions(storageRes.serveyQuestions);
   }, []);
 
   return (
     <div className="view-container">
+      {Array.isArray(serveyQuestions) &&
+        serveyQuestions?.find((s) => !s.answer) && (
+          <SurveyQuestion
+            questions={serveyQuestions}
+            setQuestions={setServeyQuestions}
+          />
+        )}
       <div className="cards-container">
         <div className="card primary">
           <span className="card-title">Account Score</span>

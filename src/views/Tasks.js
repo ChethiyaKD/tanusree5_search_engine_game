@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getFromStorage, sendMessage } from "../actions/actions.js";
-import SurveyQuestion from "../components/SurveyQuestion.js";
 import SquareButton from "../components/SquareButton.js";
 import InputType from "../components/InputType.js";
 import "../styles/views/tasks.scss";
@@ -44,13 +43,6 @@ export default function Tasks() {
 
   return (
     <div className="tasks-container">
-      {Array.isArray(serveyQuestions) &&
-        serveyQuestions?.find((s) => !s.answer) && (
-          <SurveyQuestion
-            questions={serveyQuestions}
-            setQuestions={setServeyQuestions}
-          />
-        )}
       <div className="scroller-wrapper">
         <div className="scroller">
           {data.map((k, i) => {

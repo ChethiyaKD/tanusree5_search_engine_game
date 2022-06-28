@@ -1,5 +1,5 @@
 const APIURL =
-  "https://script.google.com/macros/s/AKfycbxA2ZCMiomDaXmJnP22SEwnQT4p7wpE3312oWvVhKL60ZvkHR8Lz9hvgzcxLZHao5x7ZA/exec";
+  "https://script.google.com/macros/s/AKfycbxqmBMb5NkK8u1JKvOHQME9fHCutxG4sZVR2_vDfGfIdOnS2ARRRWTTheIaILuRdYgPnA/exec";
 const serpAPIKEY =
   "ede9da382a0e902a00d18bb52d2ec91d1766187663d782bf7d8e0f2013016aa3";
 
@@ -96,6 +96,7 @@ const getServey = async () => {
   fetch(`${APIURL}?type=surveyQuesions`)
     .then((result) => result.json())
     .then((data) => {
+      console.log(data);
       let filtered = [];
       if (!storageRes.serveyQuestions) {
         saveToStorage({ serveyQuestions: data.data });

@@ -33,8 +33,19 @@
     font-size: 14px;
     line-height: 21px;
     /* identical to box height */
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
 
     color: #343748;
+
+    .backbtn {
+      border: none;
+      padding: none;
+      outline: none;
+      margin: none;
+      cursor: pointer;
+    }
   }
 
   .scroller-wrapper {

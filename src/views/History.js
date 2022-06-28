@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Checkbox from "react-custom-checkbox";
-import { saveToStorage, sendMessage } from "../actions/actions.js";
+import {
+  saveToStorage,
+  sendMessage,
+  getFromStorage,
+} from "../actions/actions.js";
 import "../styles/views/history.scss";
 
 import DeleteButton from "../components/DeleteButton.js";
@@ -9,7 +13,7 @@ import RequestMoreData from "../components/RequestMoreData.js";
 
 import checkDot from "../assets/images/checkDot.svg";
 
-export default function History() {
+export default function History({ lastKeyword }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
@@ -22,12 +26,15 @@ export default function History() {
   };
 
   const handleSubmit = async () => {
+    let storageRes = await getFromStorage("whitelistedKeywords");
+    storageRes.whitelistedKeywords.push(lastKeyword.keyword);
     setLoading(true);
     let res = await sendMessage({
       command: "uploadHistory",
       history: selectedHistory,
     });
     if (res) setLoading(false);
+    saveToStorage({ whitelistedKeywords: storageRes.whitelistedKeywords });
   };
 
   const buttonProps = {

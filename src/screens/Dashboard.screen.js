@@ -12,16 +12,27 @@ import "../styles/screens/dashboard.scss";
 export default function Dashboard() {
   const [selected, setSelected] = useState(1);
   const [isResult, setIsResult] = useState(false);
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [lastKeyword, setLastKeyword] = useState(null);
+
   return (
     <div className="dashboard-container">
       <Navbar selected={selected} setSelected={setSelected} />
       <div className="home-wrapper">
         {selected === 1 && <Home />}
-        {selected === 2 && isResult && <Result data={data} setIsResult={setIsResult} />}
-        {selected === 2 && !isResult && <Search setSelected={setSelected} setData={setData} setIsResult={setIsResult} />}
+        {selected === 2 && isResult && (
+          <Result data={data} setIsResult={setIsResult} />
+        )}
+        {selected === 2 && !isResult && (
+          <Search
+            setSelected={setSelected}
+            setData={setData}
+            setIsResult={setIsResult}
+            setLastKeyword={setLastKeyword}
+          />
+        )}
         {selected === 3 && <BrowsingWeek />}
-        {selected === 4 && <History />}
+        {selected === 4 && <History lastKeyword={lastKeyword} />}
         {selected === 5 && <Tasks />}
       </div>
     </div>

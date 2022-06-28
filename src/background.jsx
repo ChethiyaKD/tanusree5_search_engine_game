@@ -220,6 +220,7 @@ chrome.runtime.onInstalled.addListener(() => {
     balance: 0,
     history: [],
     weekTwoKeywords: [],
+    whitelistedKeywords: [],
   };
   saveToStorage(defSettings);
 });

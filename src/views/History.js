@@ -10,15 +10,17 @@ import "../styles/views/history.scss";
 import DeleteButton from "../components/DeleteButton.js";
 import Button from "../components/Button.js";
 import RequestMoreData from "../components/RequestMoreData.js";
+import GoBackToSearch from "../components/GoBackToSearch.js";
 
 import checkDot from "../assets/images/checkDot.svg";
 
-export default function History({ lastKeyword }) {
+export default function History({ lastKeyword, setSelected, setIsResult }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
   const [requireData, setRequireData] = useState(true);
   const [isFirstTime, setIsFirstTime] = useState(true)
+  const [doneSubmitting, setDoneSubmitting] = useState(false)
 
   const handleDelete = (id) => {
     let filtered = data.filter((d) => d != id);
@@ -31,13 +33,13 @@ export default function History({ lastKeyword }) {
     if (lastKeyword) {
       storageRes.whitelistedKeywords.push(lastKeyword.keyword);
     };
-    if (!lastKeyword) saveToStorage({ bypass: true }); //if user submitted history before searching something, bypass "submit search" popup for the first time
+    // if (!lastKeyword) saveToStorage({ bypass: true }); //if user submitted history before searching something, bypass "submit search" popup for the first time
     setLoading(true);
     let res = await sendMessage({
       command: "uploadHistory",
       history: selectedHistory,
     });
-    if (res) setLoading(false);
+    if (res) { setLoading(false); setDoneSubmitting(true) };
 
     saveToStorage({ whitelistedKeywords: storageRes.whitelistedKeywords });
   };
@@ -47,6 +49,11 @@ export default function History({ lastKeyword }) {
     onClick: handleSubmit,
     disabled: data.length > 0 ? false : true,
   };
+
+  const handleGoBackBtn = () => {
+    setSelected(2);
+    setIsResult(false)
+  }
 
   const handleSelect = (selection) => {
     let found = selectedHistory.find((h) => h.url === selection.url);
@@ -83,6 +90,7 @@ export default function History({ lastKeyword }) {
 
   return (
     <div className="history-container">
+      {doneSubmitting && <GoBackToSearch onClick={handleGoBackBtn} />}
       {requireData && !isFirstTime && <RequestMoreData popup={setRequireData} />}
       <span className="title">History</span>
       <div className="scroller-wrapper">

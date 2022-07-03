@@ -316,6 +316,7 @@ export default function Search({
     let isSubmitted = storageRes.history.find((h) => h.submitted);
 
     if (!isSubmitted && isAKeyword) {
+      console.log(1);
       setLastKeyword(isAKeyword); //whitelist keyword
       setData([...staticResult]); // show static result
       setIsResult(true);
@@ -327,11 +328,13 @@ export default function Search({
         searchTerm.toLowerCase().includes(kw.toLowerCase())
       )
     ) {
+      console.log(2);
       setLastKeyword(isAKeyword); //whitelist keyword
       setData([...staticResult]); // show static result
       setIsResult(true);
       return setNoAccess(true);
     }
+    console.log(3);
     let res = await sendMessage({ command: "search", data: searchTerm });
     console.log(res);
     setData([...res]);

@@ -6,7 +6,7 @@ import ErrorPopup from "../components/ErrorPopup.js";
 
 import backBtn from "../assets/images/back.svg";
 
-export default function Result({ data, setIsResult, noAccess, setNoAccess, setSelected }) {
+export default function Result({ data, setIsResult, noAccess, setSelected }) {
   const [result, setResult] = useState([]);
 
   const openLink = (link) => {

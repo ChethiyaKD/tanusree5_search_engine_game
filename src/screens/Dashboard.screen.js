@@ -35,7 +35,7 @@ export default function Dashboard() {
           />
         )}
         {selected === 3 && <BrowsingWeek />}
-        {selected === 4 && <History lastKeyword={lastKeyword} />}
+        {selected === 4 && <History lastKeyword={lastKeyword} setSelected={setSelected} setIsResult={setIsResult} />}
         {selected === 5 && <Tasks />}
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function ErrorPopup({ setSelected }) {
 
   return (
     <div className="error-popup-wrapper">
-      <span className="popup-title">No access</span>
+      <span className="popup-title">Submit your history</span>
       <span className="error-message">
         You have to submit at least one record from your search history
       </span>

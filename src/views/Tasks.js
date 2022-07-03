@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFromStorage, sendMessage } from "../actions/actions.js";
+import { getFromStorage, sendMessage, saveToStorage } from "../actions/actions.js";
 import SquareButton from "../components/SquareButton.js";
 import InputType from "../components/InputType.js";
 import "../styles/views/tasks.scss";
@@ -14,8 +14,23 @@ export default function Tasks() {
 
   const [serveyQuestions, setServeyQuestions] = useState(null);
 
-  const handleSubmitButton = (t) => {
+  const handleSubmitButton = async (t) => {
     sendMessage({ command: "submitTask", task: t });
+    let storageRes = await getFromStorage("weekTwoKeywords");
+    let found = storageRes.weekTwoKeywords.find(k => k.keyword.toLowerCase() === t.keyword.toLowerCase());
+    let index = storageRes.weekTwoKeywords.indexOf(found)
+    if (index) {
+      storageRes.weekTwoKeywords[index].link = t.link;
+      saveToStorage({ weekTwoKeywords: storageRes.weekTwoKeywords })
+    }
+    let newData = data.filter(d => d.keyword.toLowerCase() != t.keyword.toLowerCase());
+    newData.map(nd => nd.link = null);
+    setData([...newData])
+    let inputs = document.querySelectorAll("input")
+    for (let i of inputs) {
+      console.log(i.value)
+      i.value = ""
+    }
   };
 
   const buttonProps = {
@@ -35,11 +50,20 @@ export default function Tasks() {
     let storageRes = await getFromStorage([
       "weekTwoKeywords",
       "serveyQuestions",
+      "submittedKeywords"
     ]);
-    if (storageRes.weekTwoKeywords) setData([...storageRes.weekTwoKeywords]);
+    if (storageRes.weekTwoKeywords) {
+      let filtered = storageRes.weekTwoKeywords.filter(k => !storageRes.submittedKeywords.includes(k.keyword));
+      setData([...filtered])
+      // setData([...storageRes.weekTwoKeywords.filter(k => !k.link)])
+    };
     if (storageRes.serveyQuestions)
       setServeyQuestions(storageRes.serveyQuestions);
-  }, []);
+  }, [])
+
+  useEffect(() => {
+
+  }, [data])
 
   return (
     <div className="tasks-container">

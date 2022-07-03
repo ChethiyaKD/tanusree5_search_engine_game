@@ -33,6 +33,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    position: relative;
 
     .search-input {
       width: 360px;
@@ -46,5 +47,17 @@
 
       color: #000000;
     }
+
+    .search-loading {
+      animation: loadingAnim 1s ease-in-out infinite;
+    }
+  }
+}
+@keyframes loadingAnim {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

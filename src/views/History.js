@@ -18,6 +18,7 @@ export default function History({ lastKeyword }) {
   const [loading, setLoading] = useState(false);
   const [selectedHistory, setSelectedHistory] = useState([]);
   const [requireData, setRequireData] = useState(true);
+  const [isFirstTime, setIsFirstTime] = useState(true)
 
   const handleDelete = (id) => {
     let filtered = data.filter((d) => d != id);
@@ -27,13 +28,17 @@ export default function History({ lastKeyword }) {
 
   const handleSubmit = async () => {
     let storageRes = await getFromStorage("whitelistedKeywords");
-    storageRes.whitelistedKeywords.push(lastKeyword.keyword);
+    if (lastKeyword) {
+      storageRes.whitelistedKeywords.push(lastKeyword.keyword);
+    };
+    if (!lastKeyword) saveToStorage({ bypass: true }); //if user submitted history before searching something, bypass "submit search" popup for the first time
     setLoading(true);
     let res = await sendMessage({
       command: "uploadHistory",
       history: selectedHistory,
     });
     if (res) setLoading(false);
+
     saveToStorage({ whitelistedKeywords: storageRes.whitelistedKeywords });
   };
 
@@ -54,9 +59,19 @@ export default function History({ lastKeyword }) {
     setSelectedHistory([...selectedHistory]);
   };
 
-  useEffect(async () => {
+  const init = async () => {
     let historyResponse = await sendMessage({ command: "getHistory" });
     if (historyResponse) setData(historyResponse);
+
+    //don't show popup for the first time
+    let storageRes = await getFromStorage("searchHistoryCheck");
+    setIsFirstTime(storageRes.searchHistoryCheck);
+    saveToStorage({ searchHistoryCheck: false })
+    console.log(storageRes, requireData)
+  }
+
+  useEffect(() => {
+    init();
   }, []);
 
   chrome.storage.local.onChanged.addListener((e) => {
@@ -65,9 +80,10 @@ export default function History({ lastKeyword }) {
     setData([...e.history.newValue]);
   });
 
+
   return (
     <div className="history-container">
-      {requireData && <RequestMoreData popup={setRequireData} />}
+      {requireData && !isFirstTime && <RequestMoreData popup={setRequireData} />}
       <span className="title">History</span>
       <div className="scroller-wrapper">
         <div className="scroller">

@@ -31,13 +31,16 @@ export default function SurveyQuestion({ questions, setQuestions }) {
   };
 
   useEffect(() => {
-    setQq([...questions]);
+    console.log(questions)
+    let ques = questions.filter(aq => !aq.answer);
+    console.log([ques[0]])
+    setQq([ques[0]]);
   }, [questions]);
 
   return (
     <div className="survery-question-popup-wrapper">
       <span className="popup-title">Survey Questions</span>
-      {questions.map((q, i) => {
+      {qq.map((q, i) => {
         if (q.answer) return;
         return (
           <div className="qa" key={i}>

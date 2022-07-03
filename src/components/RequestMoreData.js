@@ -9,7 +9,7 @@ export default function RequestMoreData({ popup }) {
   };
 
   const buttonProps = {
-    text: "Go to history",
+    text: "Got it",
     onClick: handleButton,
   };
 

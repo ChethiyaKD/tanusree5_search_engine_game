@@ -292,7 +292,7 @@ const getSerp = (searchTerm) => {
     };
 
     fetch(
-      `https://serpapi.com/search.json?engine=google&q=${searchTerm}&api_key=${serpAPIKEY}&num=15`,
+      `https://serpapi.com/search.json?engine=google&q=${searchTerm}&api_key=${serpAPIKEY}&num=77`,
       requestOptions
     )
       .then((response) => response.json())
@@ -321,7 +321,7 @@ const googleSearch = (searchTerm) => {
     console.log(reveresed);
     let data = [];
     console.log(submittedCount);
-    if (submittedCount.length === 0) return resolve(storageRes.staticResult);
+    if (submittedCount.length === 0) submittedCount.length = 3;
     for (
       let i = 0;
       i < Math.floor(reveresed.length * (submittedCount.length / 3));

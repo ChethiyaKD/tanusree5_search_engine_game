@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { sendMessage } from "../actions/actions.js";
 import "../styles/views/results.scss";
 
+import ErrorPopup from "../components/ErrorPopup.js";
+
 import backBtn from "../assets/images/back.svg";
 
-export default function Result({ data, setIsResult }) {
+export default function Result({ data, setIsResult, noAccess, setNoAccess, setSelected }) {
   const [result, setResult] = useState([]);
 
   const openLink = (link) => {
@@ -20,6 +22,7 @@ export default function Result({ data, setIsResult }) {
 
   return (
     <div className="results-container">
+      {noAccess && <ErrorPopup setSelected={setSelected} />}
       <span className="title">
         <button className="backbtn" onClick={() => handleBackBtn()}>
           <img src={backBtn} alt="" />

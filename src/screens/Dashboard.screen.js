@@ -7,6 +7,7 @@ import History from "../views/History.js";
 import Tasks from "../views/Tasks.js";
 import Result from "../views/Result.js";
 
+
 import "../styles/screens/dashboard.scss";
 
 export default function Dashboard() {
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const [isResult, setIsResult] = useState(false);
   const [data, setData] = useState([]);
   const [lastKeyword, setLastKeyword] = useState(null);
+  const [noAccess, setNoAccess] = useState(false);
 
   return (
     <div className="dashboard-container">
@@ -21,7 +23,7 @@ export default function Dashboard() {
       <div className="home-wrapper">
         {selected === 1 && <Home />}
         {selected === 2 && isResult && (
-          <Result data={data} setIsResult={setIsResult} />
+          <Result data={data} setIsResult={setIsResult} setNoAccess={setNoAccess} noAccess={noAccess} setSelected={setSelected} />
         )}
         {selected === 2 && !isResult && (
           <Search
@@ -29,6 +31,7 @@ export default function Dashboard() {
             setData={setData}
             setIsResult={setIsResult}
             setLastKeyword={setLastKeyword}
+            setNoAccess={setNoAccess}
           />
         )}
         {selected === 3 && <BrowsingWeek />}

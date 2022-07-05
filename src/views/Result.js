@@ -36,21 +36,21 @@ export default function Result({ data, setIsResult, noAccess, setSelected }) {
               <div className="result-item" key={i}>
                 <div
                   className="link-container"
-                  onClick={() => openLink(r.link)}
+                  onClick={() => openLink(r.link || null)}
                 >
-                  {r.displayed_link}
+                  {r.displayed_link || ""}
                 </div>
                 <div
                   className="title-container"
-                  onClick={() => openLink(r.link)}
+                  onClick={() => openLink(r.link || null)}
                 >
                   {r.title}
                 </div>
                 <div
                   className="snippet-container"
-                  onClick={() => openLink(r.link)}
+                  onClick={() => openLink(r.link || null)}
                 >
-                  {r.snippet}
+                  {r.snippet || ""}
                 </div>
               </div>
             );

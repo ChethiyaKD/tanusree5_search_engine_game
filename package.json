@@ -16,6 +16,7 @@
     "buffer": "^6.0.3",
     "css-loader": "^6.6.0",
     "file-loader": "^6.2.0",
+    "html-react-parser": "^3.0.1",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-custom-checkbox": "^2.0.1",

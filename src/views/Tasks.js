@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getFromStorage, sendMessage, saveToStorage } from "../actions/actions.js";
+import parse from "html-react-parser";
+import {
+  getFromStorage,
+  sendMessage,
+  saveToStorage,
+} from "../actions/actions.js";
 import SquareButton from "../components/SquareButton.js";
-import InputType from "../components/InputType.js";
+import { InputTextarea } from "../components/InputType.js";
 import "../styles/views/tasks.scss";
 
 export default function Tasks() {
@@ -17,19 +22,23 @@ export default function Tasks() {
   const handleSubmitButton = async (t) => {
     sendMessage({ command: "submitTask", task: t });
     let storageRes = await getFromStorage("weekTwoKeywords");
-    let found = storageRes.weekTwoKeywords.find(k => k.keyword.toLowerCase() === t.keyword.toLowerCase());
-    let index = storageRes.weekTwoKeywords.indexOf(found)
+    let found = storageRes.weekTwoKeywords.find(
+      (k) => k.keyword.toLowerCase() === t.keyword.toLowerCase()
+    );
+    let index = storageRes.weekTwoKeywords.indexOf(found);
     if (index) {
       storageRes.weekTwoKeywords[index].link = t.link;
-      saveToStorage({ weekTwoKeywords: storageRes.weekTwoKeywords })
+      saveToStorage({ weekTwoKeywords: storageRes.weekTwoKeywords });
     }
-    let newData = data.filter(d => d.keyword.toLowerCase() != t.keyword.toLowerCase());
-    newData.map(nd => nd.link = null);
-    setData([...newData])
-    let inputs = document.querySelectorAll("input")
+    let newData = data.filter(
+      (d) => d.keyword.toLowerCase() != t.keyword.toLowerCase()
+    );
+    newData.map((nd) => (nd.link = null));
+    setData([...newData]);
+    let inputs = document.querySelectorAll("input");
     for (let i of inputs) {
-      console.log(i.value)
-      i.value = ""
+      console.log(i.value);
+      i.value = "";
     }
   };
 
@@ -50,20 +59,20 @@ export default function Tasks() {
     let storageRes = await getFromStorage([
       "weekTwoKeywords",
       "serveyQuestions",
-      "submittedKeywords"
+      "submittedKeywords",
     ]);
     if (storageRes.weekTwoKeywords) {
-      let filtered = storageRes.weekTwoKeywords.filter(k => !storageRes.submittedKeywords.includes(k.keyword));
-      setData([...filtered])
+      let filtered = storageRes.weekTwoKeywords.filter(
+        (k) => !storageRes.submittedKeywords.includes(k.keyword)
+      );
+      setData([...filtered]);
       // setData([...storageRes.weekTwoKeywords.filter(k => !k.link)])
-    };
+    }
     if (storageRes.serveyQuestions)
       setServeyQuestions(storageRes.serveyQuestions);
-  }, [])
+  }, []);
 
-  useEffect(() => {
-
-  }, [data])
+  useEffect(() => {}, [data]);
 
   return (
     <div className="tasks-container">
@@ -73,11 +82,15 @@ export default function Tasks() {
             return (
               <div className="keyword-item" key={i}>
                 <span className="caption">Keyword</span>
-                <span className="keyword-name">{k.keyword}</span>
+                <div className="keyword-name">
+                  {parse(`<span>${k.keyword}</span>`)}
+                </div>
                 <div className="input-container">
-                  <InputType
+                  <InputTextarea
                     props={{ onChange: handleInputChange, id: k.id }}
                   />
+                </div>
+                <div className="button-container">
                   <SquareButton
                     props={buttonProps}
                     disabled={k.link ? true : false}

@@ -1,5 +1,5 @@
 const APIURL =
-  "https://script.google.com/macros/s/AKfycbyILngTnOHZpCJ0cRw1rhAJGt8RWcqGgOe-kpKPnL0XT4LN6qcXmmN8rxx4RPkWjl7N/exec";
+  "https://script.google.com/macros/s/AKfycbwld6617qT28Qje7Sp8cseeShpITtwJsoeJoFE14xPZSr79CPFnc6lWD2rt8Qmx8E5p/exec";
 // const APIURL =
 //   "https://script.google.com/macros/s/AKfycbxqmBMb5NkK8u1JKvOHQME9fHCutxG4sZVR2_vDfGfIdOnS2ARRRWTTheIaILuRdYgPnA/exec";
 const serpAPIKEY =
@@ -579,7 +579,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 const openWindow = () => {
   chrome.windows.getCurrent((tabWindow) => {
     const width = 760;
-    const height = 478;
+    const height = 570;
     const left = Math.round((tabWindow.width - width) * 0.5 + tabWindow.left);
     const top = Math.round((tabWindow.height - height) * 0.5 + tabWindow.top);
 

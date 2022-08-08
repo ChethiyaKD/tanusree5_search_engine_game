@@ -43,13 +43,19 @@ export default function Home() {
       <div className="briefing-container">
         <span className="briefing-title">Rules and Debrief</span>
         <span className="briefing">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum
+          PrivacyBrowser is a privacy-preserving search engine that keeps your
+          searches private. In our Beta version, the search results are not much
+          accurate. Throughout the study, if you provide your search queries,
+          the search result might improve.<br /> <br />In this search engine, in your first
+          week, you will get familiar with the tool and answer several survey
+          questionnaires which will appear in the tool as a pop-up. This search
+          history in our tool will store the search queries that you perform in
+          the search engine tab. Search history data will be stored on your
+          device with the browser extension tool. In the 2nd week, you will
+          perform the task of finding information with our browser. During this
+          process, you can choose to share your search query data with us to
+          help improve our tool to generate more accurate search results. As
+          fast you can complete the task, you will be compensated accordingly.
         </span>
       </div>
     </div>

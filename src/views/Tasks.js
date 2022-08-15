@@ -81,9 +81,9 @@ export default function Tasks() {
           {data.map((k, i) => {
             return (
               <div className="keyword-item" key={i}>
-                <span className="caption">Keyword</span>
+                <span className="caption">Question</span>
                 <div className="keyword-name">
-                  {parse(`<span>${k.keyword}</span>`)}
+                  {parse(`<span>${k.question}</span>`)}
                 </div>
                 <div className="input-container">
                   <InputTextarea

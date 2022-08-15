@@ -31,7 +31,7 @@ export default function History({ lastKeyword, setSelected, setIsResult }) {
   const handleSubmit = async () => {
     let storageRes = await getFromStorage("whitelistedKeywords");
     if (lastKeyword) {
-      storageRes.whitelistedKeywords.push(lastKeyword.keyword);
+      storageRes.whitelistedKeywords.push(lastKeyword.keywords);
     };
     // if (!lastKeyword) saveToStorage({ bypass: true }); //if user submitted history before searching something, bypass "submit search" popup for the first time
     setLoading(true);

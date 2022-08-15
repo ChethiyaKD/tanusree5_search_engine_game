@@ -23,7 +23,7 @@
     margin-top: 82px;
   }
   .search-box {
-    width: 412px;
+    width: 80%;
     height: 37px;
 
     background: #ffffff;
@@ -36,14 +36,13 @@
     position: relative;
 
     .search-input {
-      width: 360px;
+      width: calc(100% - 18px);
       border: none;
       outline: none;
-
       font-family: "Poppins Regular";
       font-size: 12px;
       line-height: 18px;
-      /* identical to box height */
+      color: #000000;
 
       color: #000000;
     }

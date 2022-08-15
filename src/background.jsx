@@ -1,9 +1,9 @@
 const APIURL =
-  "https://script.google.com/macros/s/AKfycbwld6617qT28Qje7Sp8cseeShpITtwJsoeJoFE14xPZSr79CPFnc6lWD2rt8Qmx8E5p/exec";
+  "https://script.google.com/macros/s/AKfycbyNCAcwQhVeDRpMTM62EGYJw50G---8V4z1WJoJLVmxJf0YeioaMKYHFu0SXHi67aXN/exec";
 // const APIURL =
 //   "https://script.google.com/macros/s/AKfycbxqmBMb5NkK8u1JKvOHQME9fHCutxG4sZVR2_vDfGfIdOnS2ARRRWTTheIaILuRdYgPnA/exec";
 const serpAPIKEY =
-  "ede9da382a0e902a00d18bb52d2ec91d1766187663d782bf7d8e0f2013016aa3";
+  "7ff28bfd424339b1679a3d5455f2ced6dd0177d74ef8e62240b03be3a675588b";
 
 const staticResult = [
   {

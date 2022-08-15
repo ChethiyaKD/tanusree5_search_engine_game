@@ -302,6 +302,7 @@ export default function Search({
   const handleSearchInput = (e) => {
     setSearchTerm(e.target.value);
   };
+
   const handleKeyUp = async (e) => {
     if (e.key != "Enter") return;
     setIsLoading(true);
@@ -311,8 +312,11 @@ export default function Search({
       "whitelistedKeywords",
     ]);
     let isAKeyword = storageRes.weekTwoKeywords.find((k) =>
-      searchTerm.toLowerCase().includes(k.keyword.toLowerCase())
+      k.keywords.find((kws) =>
+        searchTerm.toLowerCase().includes(kws.toLowerCase())
+      )
     );
+    console.log({ isAKeyword });
     let isSubmitted = storageRes.history.find((h) => h.submitted);
 
     if (!isSubmitted && isAKeyword) {
@@ -325,7 +329,7 @@ export default function Search({
     if (
       isSubmitted &&
       !storageRes.whitelistedKeywords.find((kw) =>
-        searchTerm.toLowerCase().includes(kw.toLowerCase())
+        kw.find((k) => k.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     ) {
       console.log(2);
@@ -343,7 +347,7 @@ export default function Search({
   };
 
   return (
-    <div className="view-container">
+    <div className="view-container search">
       {noAccess && <ErrorPopup setSelected={setSelected} />}
       <img src={googleImg} alt="" className="google-logo" />
       <div className="search-box">

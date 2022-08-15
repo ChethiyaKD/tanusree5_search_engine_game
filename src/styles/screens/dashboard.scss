@@ -4,8 +4,8 @@
   display: flex;
 
   .home-wrapper {
-    width: 566px;
-    height: 535px;
+    width: calc(100% - 194px);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
